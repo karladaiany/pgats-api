@@ -1,5 +1,6 @@
 // userService.js
 const { users } = require('../model/userModel');
+const bcrypt = require('bcryptjs');
 
 function registerUser(username, password, isFavored = false) {
   if (users.find(u => u.username === username)) {
@@ -11,8 +12,10 @@ function registerUser(username, password, isFavored = false) {
 }
 
 function loginUser(username, password) {
-  const user = users.find(u => u.username === username && u.password === password);
+  const user = users.find(u => u.username === username);
   if (!user) throw new Error('Credenciais inválidas');
+  const senhaValida = bcrypt.compareSync(password, user.password);
+  if (!senhaValida) throw new Error('Credenciais inválidas');
   return user;
 }
 

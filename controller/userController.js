@@ -17,7 +17,12 @@ exports.login = (req, res) => {
   if (!username || !password) return res.status(400).json({ error: 'Usuário e senha obrigatórios' });
   try {
     const user = userService.loginUser(username, password);
-    res.status(200).json(user);
+    // Gera o token JWT
+    const jwt = require('jsonwebtoken');
+    const SECRET = process.env.JWT_SECRET || 'secretdemo';
+    const token = jwt.sign(
+      { username: user.username, isFavored: user.isFavored }, SECRET, { expiresIn: '1h' });
+    res.status(200).json({ user, token });
   } catch (err) {
     res.status(401).json({ error: err.message });
   }
