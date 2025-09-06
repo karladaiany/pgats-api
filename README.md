@@ -1,5 +1,9 @@
 # API de Transferências
 
+## Configuração
+
+Antes de seguir, crie um arquivo .env na pasta raiz contendo as propriedades BASE_URL_REST E BASE_URL_GRAPHQL, com a URL desses serviços.
+
 ## API GraphQL
 
 A API GraphQL está disponível na pasta `graphql/` e expõe os serviços de Transfer e Usuário.
